@@ -3,7 +3,7 @@
 
 #include <utility> // forward
 #include <functional> // function
-#include <map> // map
+#include <unordered_map> // unordered_map
 #include <string> // string
 #include <sstream> // stringstream
 
@@ -65,8 +65,8 @@ expression_t<T> expression(T&& expression_value)
     return expression(std::forward<T>(expression_value), expression_string_value);
 }
 
-expression_t<std::nullptr_t> expression(std::nullptr_t expression_value);
-expression_t<bool> expression(bool expression_value);
+EIGHTEST_API expression_t<std::nullptr_t> expression(std::nullptr_t expression_value);
+EIGHTEST_API expression_t<bool> expression(bool expression_value);
 
 template <typename T>
 expression_t<bool> expression_t<T>::operator!() const
@@ -76,7 +76,7 @@ expression_t<bool> expression_t<T>::operator!() const
 
 class registry_t;
 
-class test_t
+class EIGHTEST_API test_t
 {
 public:
     std::string const module;
@@ -93,10 +93,10 @@ protected:
     void bind(registry_t* to = nullptr);
 };
 
-class registry_t
+class EIGHTEST_API registry_t
 {
 public:
-    std::map<std::string, std::map<std::string, test_t*>> all;
+    std::unordered_map<std::string, std::unordered_map<std::string, test_t*>> all;
     std::function<void(std::string const&)> stat_handler = &default_stat_handler;
 
 public:
@@ -123,7 +123,7 @@ public:
     void try_catch(std::function<void()> const& call) const noexcept;
 };
 
-extern registry_t* global();
+extern EIGHTEST_API registry_t* global();
 
 } // namespace eightest
 
