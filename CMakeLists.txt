@@ -18,6 +18,14 @@ elseif(APPLE)
     set(EIGHTEST_RPATH "@loader_path/../Frameworks")
 endif()
 
+if(WIN32)
+    set(EIGHTEST_MODULE_EXPORT "__declspec(dllexport)")
+    set(EIGHTEST_MODULE_IMPORT "__declspec(dllimport)")
+else()
+    set(EIGHTEST_MODULE_EXPORT "__attribute__((visibility(\"default\")))")
+    set(EIGHTEST_MODULE_IMPORT "")
+endif()
+
 
 # [[Binaries]]
 if(EIGHTEST_BUILD_SHARED_LIBS)
@@ -32,7 +40,9 @@ add_library(Eightest ${PROJECT_LIBS_TYPE} ${PROJECT_SOURCES_FILES})
 target_include_directories(Eightest PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 if(EIGHTEST_BUILD_SHARED_LIBS)
-    set_target_properties(Eightest PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+    target_compile_definitions(Eightest PRIVATE "EIGHTEST_API=${EIGHTEST_MODULE_EXPORT}" INTERFACE "EIGHTEST_API=${EIGHTEST_MODULE_IMPORT}")
+else()
+    target_compile_definitions(Eightest PUBLIC "EIGHTEST_API=")
 endif()
 
 
@@ -47,7 +57,7 @@ if(EIGHTEST_RUN_MODULE)
 
     set_target_properties(EightestLauncher PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE INSTALL_RPATH "${EIGHTEST_RPATH}")
     if(APPLE)
-        set_target_properties(EightestLauncher PROPERTIES MACOSX_BUNDLE TRUE INSTALL_NAME_DIR "@rpath")
+        set_target_properties(EightestLauncher PROPERTIES INSTALL_NAME_DIR "@rpath")
     endif()
     target_compile_definitions(EightestLauncher PUBLIC "EIGHTEST_RUN_MODULE=\"${EIGHTEST_RUN_MODULE}\"")
 endif()
