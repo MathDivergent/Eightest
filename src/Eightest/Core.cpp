@@ -1,4 +1,6 @@
+#ifdef EIGHTEST_DEFAULT_STAT_HANDLER
 #include <cstdio> // printf
+#endif // EIGHTEST_DEFAULT_STAT_HANDLER
 
 #include <Eightest/Core.hpp>
 
@@ -43,7 +45,7 @@ static std::string info_format(test_t* test, std::string const& msg, std::string
          + (ok ? "\n" : " [  WITH  ] " + string_value + "\n");
 }
 
-static void update_stat(unsigned& passed, unsigned& failed, bool ok)
+static void update_stat(std::size_t& passed, std::size_t& failed, bool ok)
 {
     passed += ok;
     failed += not ok;
@@ -134,7 +136,9 @@ void registry_t::try_catch(std::function<void()> const& call) const noexcept
 
 void registry_t::default_stat_handler(std::string const& stat)
 {
+    #ifdef EIGHTEST_DEFAULT_STAT_HANDLER
     printf("%s", stat.c_str());
+    #endif // EIGHTEST_DEFAULT_STAT_HANDLER
 }
 
 registry_t* global()

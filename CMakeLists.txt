@@ -1,5 +1,5 @@
 # [[Root]]
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.16)
 
 project(Eightest)
 
@@ -9,6 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # [[Options]]
 option(EIGHTEST_BUILD_SHARED_LIBS "Build shared libraies by Default" ON)
+option(EIGHTEST_DEFAULT_STAT_HANDLER "Build with printf stat handler by Default" ON)
 
 
 # [[Defaults]]
@@ -43,6 +44,10 @@ if(EIGHTEST_BUILD_SHARED_LIBS)
     target_compile_definitions(Eightest PRIVATE "EIGHTEST_API=${EIGHTEST_MODULE_EXPORT}" INTERFACE "EIGHTEST_API=${EIGHTEST_MODULE_IMPORT}")
 else()
     target_compile_definitions(Eightest PUBLIC "EIGHTEST_API=")
+endif()
+
+if(EIGHTEST_DEFAULT_STAT_HANDLER)
+    target_compile_definitions(Eightest PUBLIC "EIGHTEST_DEFAULT_STAT_HANDLER=")
 endif()
 
 
