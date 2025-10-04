@@ -100,8 +100,8 @@ public:
     std::function<void(std::string const&)> stat_handler = &default_stat_handler;
 
 public:
-    unsigned passed = 0;
-    unsigned failed = 0;
+    std::size_t passed = 0;
+    std::size_t failed = 0;
 
 public:
     void add(test_t* test);
