@@ -55,6 +55,8 @@ if(EIGHTEST_DEFAULT_STAT_HANDLER)
     target_compile_definitions(Eightest PUBLIC "EIGHTEST_DEFAULT_STAT_HANDLER=")
 endif()
 
+target_compile_options(Eightest PUBLIC -fno-rtti)
+
 
 # [[Launcher][Defaults]]
 if(EIGHTEST_RUN_MODULE)
