@@ -55,7 +55,7 @@ if(EIGHTEST_DEFAULT_STAT_HANDLER)
     target_compile_definitions(Eightest PUBLIC "EIGHTEST_DEFAULT_STAT_HANDLER=")
 endif()
 
-target_compile_options(Eightest PUBLIC -fno-rtti)
+target_compile_options(Eightest PRIVATE -fno-rtti)
 
 
 # [[Launcher][Defaults]]
@@ -74,7 +74,7 @@ if(EIGHTEST_RUN_MODULE)
 
     target_link_libraries(EightestLauncher PUBLIC Eightest)
     if(LINUX)
-        target_link_libraries(EightestLauncher PUBLIC dl)
+        target_link_libraries(EightestLauncher PRIVATE dl)
     endif()
 endif()
 
