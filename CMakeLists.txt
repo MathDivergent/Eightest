@@ -33,6 +33,26 @@ if(LINUX OR APPLE)
 endif()
 
 
+# [[Launcher][Defaults]]
+if(EIGHTEST_RUN_MODULE)
+    if(LINUX)
+        set(EIGHTEST_RPATH "$ORIGIN")
+    elseif(APPLE)
+        set(EIGHTEST_RPATH "@loader_path/../Frameworks")
+    endif()
+endif()
+
+if(PROJECT_IS_TOP_LEVEL)
+    set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/Binaries")
+
+    if(WIN32 OR LINUX)
+        set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/Binaries")
+    elseif(APPLE)
+        set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/Frameworks")
+    endif()
+endif()
+
+
 # [[Module][Binaries]]
 file(GLOB_RECURSE PROJECT_SOURCES_FILES "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp" "${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp")
 add_library(Eightest ${PROJECT_LIBS_TYPE} ${PROJECT_SOURCES_FILES})
@@ -56,16 +76,6 @@ if(EIGHTEST_DEFAULT_STAT_HANDLER)
 endif()
 
 target_compile_options(Eightest PRIVATE -fno-rtti)
-
-
-# [[Launcher][Defaults]]
-if(EIGHTEST_RUN_MODULE)
-    if(LINUX)
-        set(EIGHTEST_RPATH "$ORIGIN")
-    elseif(APPLE)
-        set(EIGHTEST_RPATH "@loader_path/../Frameworks")
-    endif()
-endif()
 
 
 # [[Launcher][Binaries]]

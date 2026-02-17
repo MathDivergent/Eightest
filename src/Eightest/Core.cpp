@@ -78,7 +78,7 @@ bool registry_t::check(expression_t<bool> const& expression, test_t* test, std::
     return condition;
 }
 
-static void safe_run(test_t* test) noexcept
+void registry_t::safe_run(test_t* test)
 {
     try
     {

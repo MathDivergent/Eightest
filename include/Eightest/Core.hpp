@@ -109,6 +109,7 @@ public:
 public:
     bool check(bool condition, test_t* test, std::string const& msg);
     bool check(expression_t<bool> const& expression, test_t* test, std::string const& msg);
+    void safe_run(test_t* test);
 
 public:
     void execute_module(std::string const& name); // execute test module with specify name

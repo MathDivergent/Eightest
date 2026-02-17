@@ -14,8 +14,8 @@
 
 int main()
 {
-    EIGHTEST_LOAD_MODULE();
+    const auto module = EIGHTEST_LOAD_MODULE();
     eightest::global()->execute_all();
-    return !eightest::global()->stat();
+    return module != NULL && eightest::global()->stat() ? 0 : 1;
 }
 #endif // EIGHTEST_RUN_MODULE
