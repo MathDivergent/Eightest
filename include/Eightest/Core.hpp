@@ -118,9 +118,6 @@ public:
 public:
     bool stat(); // return true in all passed
     static void default_stat_handler(std::string const& text);
-
-public:
-    void try_catch(std::function<void()> const& call) const noexcept;
 };
 
 extern EIGHTEST_API registry_t* global();
