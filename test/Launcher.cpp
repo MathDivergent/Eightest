@@ -15,7 +15,7 @@
 int main()
 {
     EIGHTEST_LOAD_MODULE();
-    eightest::global()->try_catch([] { eightest::global()->execute_all(); });
+    eightest::global()->execute_all();
     return !eightest::global()->stat();
 }
 #endif // EIGHTEST_RUN_MODULE
