@@ -78,13 +78,33 @@ bool registry_t::check(expression_t<bool> const& expression, test_t* test, std::
     return condition;
 }
 
+void registry_t::safe_run(test_t* test)
+{
+    try
+    {
+        test->run();
+    }
+    catch(char const* e)
+    {
+        check(expression_t<bool>{false, e}, test, "<exception>");
+    }
+    catch(std::exception const& e)
+    {
+        check(expression_t<bool>{false, e.what()}, test, "<exception>");
+    }
+    catch(...)
+    {
+        check(expression_t<bool>{false, "<unknown>"}, test, "<exception>");
+    }
+}
+
 void registry_t::execute_module(std::string const& name)
 {
     auto it = all.find(name);
     if (it == all.end()) return;
 
     auto& module = it->second;
-    for (auto& name_test : module) name_test.second->run();
+    for (auto& name_test : module) safe_run(name_test.second);
 }
 
 void registry_t::execute_test(std::string const& name)
@@ -96,7 +116,7 @@ void registry_t::execute_test(std::string const& name)
         auto it = module.find(name);
         if (it == module.end()) continue;
 
-        it->second->run();
+        safe_run(it->second);
     }
 }
 
@@ -105,7 +125,7 @@ void registry_t::execute_all()
     for (auto& name_module : all)
     {
         auto& module = name_module.second;
-        for (auto& name_test : module) name_test.second->run();
+        for (auto& name_test : module) safe_run(name_test.second);
     }
 }
 
@@ -124,14 +144,6 @@ bool registry_t::stat()
 {
     stat_handler(stat_format(passed, failed));
     return failed == 0;
-}
-
-void registry_t::try_catch(std::function<void()> const& call) const noexcept
-{
-    try { call(); }
-    catch(char const* e) { stat_handler(e); }
-    catch(std::exception& e) { stat_handler(e.what()); }
-    catch(...) { stat_handler("Unexpected error."); }
 }
 
 void registry_t::default_stat_handler(std::string const& stat)
