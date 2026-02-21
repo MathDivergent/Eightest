@@ -23,9 +23,4 @@ int main()
 
     return 0;
 }
-
-TEST(TestSelf, TestSelf)
-{
-    EXPECT("self", true);
-}
 #endif // EIGHTEST_RUN_MODULE
