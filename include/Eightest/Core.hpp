@@ -16,7 +16,7 @@
 #define TEST(test_module, test_name, ...) \
     TEST_SPACE(test_module) { \
         static struct test_name : eightest::test_t { \
-            test_name() : eightest::test_t(#test_module, #test_name) { bind(__VA_ARGS__); } \
+            test_name() : eightest::test_t(#test_module, #test_name) { } \
             void run() override; \
         } s##test_name; \
     } \
