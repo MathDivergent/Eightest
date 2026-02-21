@@ -128,7 +128,7 @@ extern EIGHTEST_API registry_t* global();
 #define EIGHTEST_EXPRESSION_OPERATOR_GENERIC(op, lhs_brace, rhs_brace) \
     template <typename L, typename R> \
     eightest::expression_t<bool> operator op(eightest::expression_t<L> const& lhs_expression, \
-                                               eightest::expression_t<R> const& rhs_expression) { \
+                                             eightest::expression_t<R> const& rhs_expression) { \
         return eightest::expression( \
             lhs_expression.value op rhs_expression.value, \
             lhs_brace+lhs_expression.string_value+" "#op" "+rhs_expression.string_value+rhs_brace \
@@ -136,12 +136,12 @@ extern EIGHTEST_API registry_t* global();
     } \
     template <typename L, typename R> \
     eightest::expression_t<bool> operator op(eightest::expression_t<L> const& lhs_expression, \
-                                               R const& rhs_value) { \
+                                             R const& rhs_value) { \
         return ::operator op(lhs_expression, eightest::expression(rhs_value)); \
     } \
     template <typename L, typename R> \
     eightest::expression_t<bool> operator op(L const& lhs_value, \
-                                               eightest::expression_t<R> const& rhs_expression) { \
+                                             eightest::expression_t<R> const& rhs_expression) { \
        return ::operator op(eightest::expression(lhs_value), rhs_expression); \
     }
 

@@ -86,15 +86,15 @@ void registry_t::safe_run(test_t* test)
     }
     catch(char const* e)
     {
-        stat_handler(info_format(test, "<exception>", e, false));
+        check(expression_t<bool>{false, e}, test, "<exception>");
     }
     catch(std::exception const& e)
     {
-        stat_handler(info_format(test, "<exception>", e.what(), false));
+        check(expression_t<bool>{false, e.what()}, test, "<exception>");
     }
     catch(...)
     {
-        stat_handler(info_format(test, "<exception>", "<unknown>", false));
+        check(expression_t<bool>{false, "<unknown>"}, test, "<exception>");
     }
 }
 
