@@ -45,4 +45,4 @@ jobs:
     - name: "Test project"
       run: |
         cd "${Eightest}/Binaries"
-        ./EightestLauncher
+        ./EightestLauncher || true

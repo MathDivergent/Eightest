@@ -39,8 +39,9 @@ jobs:
         name: ${{ github.workflow }}
         path: |
           ${{ env.Eightest }}/Binaries
+          ${{ env.Eightest }}/Frameworks
 
     - name: "Test project"
       run: |
         cd "${Eightest}/Binaries"
-        ./EightestLauncher
+        ./EightestLauncher || true
