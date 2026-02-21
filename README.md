@@ -8,7 +8,7 @@
 
 `Eightest` is a simple testing library, easy and flexible to use. Is an external module of the [Eightgine](https://github.com/MathDivergent/Eightgine) (game engine).
 
-See last stable library version 2.9.0 [here](https://github.com/MathDivergent/Eightest/releases).
+See last stable library version 2.10.0 [here](https://github.com/MathDivergent/Eightest/releases).
 
 ## License:
 This library is an open source project licensed under: [MIT](https://opensource.org/licenses/MIT).
