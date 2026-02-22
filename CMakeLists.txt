@@ -6,12 +6,12 @@ project(Eightest)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_SHARED_LIBRARY_PREFIX "")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic -Werror")
 
 
 # [[Module][Options]]
 option(EIGHTEST_BUILD_SHARED_LIBS "Build shared libraies by Default" ON)
 option(EIGHTEST_DEFAULT_STAT_HANDLER "Build with printf stat handler by Default" ON)
+option(EIGHTEST_WARNING_FLAGS_ENABLE "Build with warning checking by Default" ON)
 
 
 # [[Module][Defaults]]
@@ -31,6 +31,10 @@ endif()
 
 if(LINUX OR APPLE)
     set(EIGHTEST_VISIBILITY_HIDDEN C_VISIBILITY_PRESET hidden CXX_VISIBILITY_PRESET hidden VISIBILITY_INLINES_HIDDEN ON)
+endif()
+
+if(EIGHTEST_WARNING_FLAGS_ENABLE)
+    set(EIGHTEST_WARNING_FLAGS "-Wall" "-Wextra" "-Wpedantic" "-Werror")
 endif()
 
 
@@ -76,7 +80,11 @@ if(EIGHTEST_DEFAULT_STAT_HANDLER)
     target_compile_definitions(Eightest PUBLIC "EIGHTEST_DEFAULT_STAT_HANDLER=")
 endif()
 
-target_compile_options(Eightest PRIVATE -fno-rtti)
+target_compile_options(Eightest PRIVATE "-fno-rtti")
+
+if(EIGHTEST_WARNING_FLAGS)
+    target_compile_options(Eightest PRIVATE ${EIGHTEST_WARNING_FLAGS})
+endif()
 
 
 # [[Launcher][Binaries]]
@@ -97,4 +105,8 @@ if(EIGHTEST_RUN_MODULE)
     endif()
 
     target_compile_definitions(EightestLauncher PUBLIC "EIGHTEST_RUN_MODULE=\"${EIGHTEST_RUN_MODULE}\"")
+
+    if(EIGHTEST_WARNING_FLAGS)
+        target_compile_options(EightestLauncher PRIVATE ${EIGHTEST_WARNING_FLAGS})
+    endif()
 endif()
