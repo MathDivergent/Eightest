@@ -33,9 +33,7 @@ if(LINUX OR APPLE)
     set(EIGHTEST_VISIBILITY_HIDDEN C_VISIBILITY_PRESET hidden CXX_VISIBILITY_PRESET hidden VISIBILITY_INLINES_HIDDEN ON)
 endif()
 
-if(EIGHTEST_WARNING_FLAGS_ENABLE)
-    set(EIGHTEST_WARNING_FLAGS "-Wall" "-Wextra" "-Wpedantic" "-Werror")
-endif()
+set(EIGHTEST_WARNING_FLAGS "-Wall" "-Wextra" "-Wpedantic" "-Werror")
 
 
 # [[Launcher][Defaults]]
@@ -82,7 +80,7 @@ endif()
 
 target_compile_options(Eightest PRIVATE "-fno-rtti")
 
-if(EIGHTEST_WARNING_FLAGS)
+if(EIGHTEST_WARNING_FLAGS_ENABLE)
     target_compile_options(Eightest PRIVATE ${EIGHTEST_WARNING_FLAGS})
 endif()
 
@@ -106,7 +104,7 @@ if(EIGHTEST_RUN_MODULE)
 
     target_compile_definitions(EightestLauncher PUBLIC "EIGHTEST_RUN_MODULE=\"${EIGHTEST_RUN_MODULE}\"")
 
-    if(EIGHTEST_WARNING_FLAGS)
+    if(EIGHTEST_WARNING_FLAGS_ENABLE)
         target_compile_options(EightestLauncher PRIVATE ${EIGHTEST_WARNING_FLAGS})
     endif()
 endif()
