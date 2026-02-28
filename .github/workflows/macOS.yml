@@ -9,7 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        image: [mac0s-15, macos-latest]
+        image: [macos-15, macos-latest]
 
     runs-on:  ${{ matrix.image }}
 
