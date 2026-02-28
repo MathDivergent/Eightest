@@ -40,7 +40,7 @@ jobs:
     - name: "Package and Upload project"
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ github.workflow }}
+        name: ${{ github.workflow }}-${{ matrix.image }}
         path: |
           ${{ env.Eightest }}/Binaries
           ${{ env.Eightest }}/Frameworks
